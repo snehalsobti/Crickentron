@@ -217,6 +217,8 @@ def winIndex(team1, team2):
     #select index with maximum prediction score
     prediction = output.max(1, keepdim=True)[1]
 
+    return prediction
+
 result = winIndex(team1, team2)
 
 if (result == 0):
