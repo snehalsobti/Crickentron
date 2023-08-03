@@ -223,8 +223,8 @@ def winIndex(team1, team2):
 result = winIndex(team1, team2)
 
 if (result == 0):
-    print('Team 1 wins')
+    st.write('Team 1 wins')
 elif (result == 1):
-    print('Team 2 wins')
+    st.write('Team 2 wins')
 else:
-    print('No Result')
+    st.write('No Result')
