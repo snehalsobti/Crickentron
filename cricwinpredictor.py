@@ -117,9 +117,6 @@ def get_training_data():
     data_tensor = torch.Tensor(data_df.values)
     labels_tensor = torch.Tensor(labels_df.values.squeeze(1))
 
-    print('Shape of data_tensor: ', data_tensor.shape)
-    print('Shape of labels_tensor: ', labels_tensor.shape)
-
     # Create a TensorDataset from data and labels
     dataset = TensorDataset(data_tensor, labels_tensor)
     dataset_size = len(dataset)
