@@ -187,7 +187,7 @@ def train(model, data, val_set, batch_size=64, num_epochs=1 , learning_rate = 0.
             val_acc.append(get_accuracy(model, val_set))  # compute validation accuracy
             n += 1
 
-        print('Epoch {0}: Training Accuracy: {1} | Validation Accuracy: {2}'.format(epoch, train_acc[n - 1], val_acc[n - 1]))
+        # print('Epoch {0}: Training Accuracy: {1} | Validation Accuracy: {2}'.format(epoch, train_acc[n - 1], val_acc[n - 1]))
 
     if print_stat:
       # plotting
