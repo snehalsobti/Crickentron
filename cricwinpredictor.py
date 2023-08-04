@@ -219,11 +219,11 @@ def winIndex(team0, team1):
 
     return prediction
 
-result = winIndex(team0, team1)
+# result = winIndex(team0, team1)
 
-if (result == 0):
-    st.write('Team 0 wins')
-elif (result == 1):
-    st.write('Team 1 wins')
-else:
-    st.write('No Result')
+# if (result == 0):
+#     st.write('Team 0 wins')
+# elif (result == 1):
+#     st.write('Team 1 wins')
+# else:
+st.write(':orange[**No Result**]')
