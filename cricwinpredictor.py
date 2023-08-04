@@ -97,10 +97,16 @@ def get_features_dataset(team0, team1):
 
     # Get the 9 features for each player
     for player in team0:
-        data_row = np.append(data_row, name_to_features_dict[player.strip()])
+        if (player in name_to_features_dict):
+            data_row = np.append(data_row, name_to_features_dict[player.strip()])
+        else:
+            data_row = np.append(data_row, np.zeros(numFeatures))
 
     for player in team1:
-        data_row = np.append(data_row, name_to_features_dict[player.strip()])
+        if (player in name_to_features_dict):
+            data_row = np.append(data_row, name_to_features_dict[player.strip()])
+        else:
+            data_row = np.append(data_row, np.zeros(numFeatures))
 
     data.append(data_row)
 
