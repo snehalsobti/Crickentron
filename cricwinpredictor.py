@@ -6,10 +6,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import TensorDataset, DataLoader, random_split
-
-import matplotlib.pyplot as plt # for plotting
-import torch.optim as optim #for gradient descent
 
 st.title("Crickentron 🏏")
 st.write("Predict the Winner! Enter the names of all 11 players for each team and discover the victorious team!")
@@ -112,120 +108,20 @@ def get_features_dataset(team0, team1):
 
     return torch.Tensor(data)
 
-def get_training_data():
-    data_df = pd.read_excel('primary_model_data.xlsx')
-    labels_df = pd.read_excel('primary_model_labels.xlsx')
+def getWinner(team0, team1):
+    model = torch.load('ourModel.pt')
+    model.eval()
 
-    # Normalize each of the desired features of data_df to keep values between 0 and 1
-    data_df = (data_df - np.min(data_df, axis = 0)) / (np.max(data_df, axis = 0) - np.min(data_df, axis = 0))
-
-    # Convert data and labels to PyTorch tensors
-    data_tensor = torch.Tensor(data_df.values)
-    labels_tensor = torch.Tensor(labels_df.values.squeeze(1))
-
-    # Create a TensorDataset from data and labels
-    dataset = TensorDataset(data_tensor, labels_tensor)
-    dataset_size = len(dataset)
-
-    # Split data into train, val and test data in ratio 70:15:15
-    train_size = int(0.7 * dataset_size)
-    val_size = int(0.15 * dataset_size)
-    test_size = dataset_size - train_size - val_size
-
-    train_set, val_set, test_set = random_split(dataset, [train_size, val_size, test_size])
-
-    return train_set, val_set
-
-
-class Primary_Model(nn.Module):
-    def __init__(self):
-        super(Primary_Model, self).__init__()
-        self.name = 'Primary'
-        self.layer1 = nn.Linear(22 * 9, 60)
-        self.layer2 = nn.Linear(60, 20)
-        self.layer3 = nn.Linear(20, 3) # Output's shape is 3 because we have 3 classes (0, 1, 2)
-    def forward(self, input):
-        flattened = input.view(-1, 22 * 9)
-        activation1 = F.relu(self.layer1(flattened))
-        activation2 = F.relu(self.layer2(activation1))
-        output = self.layer3(activation2)
-        return output
-
-
-
-def get_accuracy(model, data):
-    correct = 0
-    total = 0
-    for inputs, labels in torch.utils.data.DataLoader(data, batch_size=64):
-        output = model(inputs)
-        #select index with maximum prediction score
-        pred = output.max(1, keepdim=True)[1]
-        correct += pred.eq(labels.view_as(pred)).sum().item()
-        total += inputs.shape[0]
-    return correct / total
-
-def train(model, data, val_set, batch_size=64, num_epochs=1 , learning_rate = 0.01, print_stat = 1):
-    train_loader = torch.utils.data.DataLoader(data, batch_size=batch_size)
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum = 0.7)
-
-    iters, losses, train_acc, val_acc = [], [], [], []
-
-    # training
-    n = 0 # the number of iterations
-    for epoch in range(num_epochs):
-        for inputs, labels in iter(train_loader):
-
-            out = model(inputs)             # forward pass
-
-            loss = criterion(out, labels.long()) # compute the total loss
-            loss.backward()               # backward pass (compute parameter updates)
-            optimizer.step()              # make the updates for each parameter
-            optimizer.zero_grad()         # a clean up step for PyTorch
-
-            # save the current training information
-            iters.append(n)
-            losses.append(float(loss)/batch_size)             # compute *average* loss
-            train_acc.append(get_accuracy(model, data)) # compute training accuracy
-            val_acc.append(get_accuracy(model, val_set))  # compute validation accuracy
-            n += 1
-
-        # print('Epoch {0}: Training Accuracy: {1} | Validation Accuracy: {2}'.format(epoch, train_acc[n - 1], val_acc[n - 1]))
-
-    if print_stat:
-      # plotting
-      plt.title("Training Loss")
-      plt.plot(iters, losses, label="Train")
-      plt.xlabel("Iterations")
-      plt.ylabel("Loss")
-      plt.show()
-
-      plt.title("Training and Validation Accuracy")
-      plt.plot(iters, train_acc, label="Train")
-      plt.plot(iters, val_acc, label="Validation")
-      plt.xlabel("Iterations")
-      plt.ylabel("Accuracy")
-      plt.legend(loc='best')
-      plt.show()
-
-      print("Final Training Accuracy: {}".format(train_acc[-1]))
-      print("Final Validation Accuracy: {}".format(val_acc[-1]))
-
-def winIndex(team0, team1):
     test_data = get_features_dataset(team0, team1)
-    train_set, val_set = get_training_data()
 
-    model = Primary_Model()
-    train(model, train_set, val_set, learning_rate=0.01, batch_size=64, num_epochs=150, print_stat=0)
-
-    output = F.softmax(model(test_data))
+    output = F.softmax(model(test_data), dim = 1)
 
     #select index with maximum prediction score
     prediction = output.max(1, keepdim=True)[1]
 
-    return prediction
+    return prediction.item()
 
-result = winIndex(team0, team1)
+result = getWinner(team0, team1)
 
 if (result == 0):
     st.header(':orange[**Team 0 wins**]')
