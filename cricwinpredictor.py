@@ -226,4 +226,4 @@ def winIndex(team0, team1):
 # elif (result == 1):
 #     st.write('Team 1 wins')
 # else:
-st.write(':orange[**No Result**]')
+st.header(':orange[**No Result**]')
