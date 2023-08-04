@@ -135,6 +135,9 @@ def getWinner(team0, team1):
 
     return prediction.item()
 
+# Initializing the variable result
+result = -1
+
 predict_button = st.button("Predict")
 if predict_button:
     with st.spinner("Analyzing..."):
