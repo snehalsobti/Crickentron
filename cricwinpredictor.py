@@ -135,7 +135,10 @@ def getWinner(team0, team1):
 
     return prediction.item()
 
-result = getWinner(team0, team1)
+predict_button = st.button("Predict")
+if predict_button:
+    with st.spinner("Analyzing..."):
+        result = getWinner(team0, team1)
 
 if (result == 0):
     st.header(':orange[**Team 0 wins**]')
