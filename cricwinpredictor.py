@@ -108,6 +108,20 @@ def get_features_dataset(team0, team1):
 
     return torch.Tensor(data)
 
+class Primary_Model(nn.Module):
+    def __init__(self):
+        super(Primary_Model, self).__init__()
+        self.name = 'Primary'
+        self.layer1 = nn.Linear(22 * 9, 60)
+        self.layer2 = nn.Linear(60, 20)
+        self.layer3 = nn.Linear(20, 3) # Output's shape is 3 because we have 3 classes (0, 1, 2)
+    def forward(self, input):
+        flattened = input.view(-1, 22 * 9)
+        activation1 = F.relu(self.layer1(flattened))
+        activation2 = F.relu(self.layer2(activation1))
+        output = self.layer3(activation2)
+        return output
+
 def getWinner(team0, team1):
     model = torch.load('ourModel.pt')
     model.eval()
