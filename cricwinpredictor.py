@@ -17,7 +17,7 @@ with st.sidebar:
 
 st.subheader("Enter Match Year:")
 
-year_number = st.text_input("Match year - e.g 2023")
+year_number = st.text_input("Match year")
 
 # team0_player1 = 'SR Tendulkar'
 # team0_player2 = 'ST Jayasuriya'
