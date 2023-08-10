@@ -43,6 +43,10 @@ year_number = st.text_input("Match year")
 # team1_player10 = 'RD Chahar'
 # team1_player11 = 'JD Unadkat'
 
+st.subheader("Enter Team 0 name:")
+
+team0_name = st.text_input("Team 0")
+
 st.subheader("Enter Team 0 players:")
 
 team0_player1 = st.text_input("Player 1")
@@ -56,6 +60,10 @@ team0_player8 = st.text_input("Player 8")
 team0_player9 = st.text_input("Player 9")
 team0_player10 = st.text_input("Player 10")
 team0_player11 = st.text_input("Player 11")
+
+st.subheader("Enter Team 1 name:")
+
+team1_name = st.text_input("Team 1")
 
 st.subheader("Enter Team 1 players:")
 
@@ -224,8 +232,10 @@ if predict_button:
         result = getWinner(team0, team1, year_number)
 
 if (result == 0):
-    st.header(':orange[**Team 0 wins**]')
+    header_text = f":orange[**{team0_name} wins**]"
 elif (result == 1):
-    st.header(':orange[**Team 1 wins**]')
+    header_text = f":orange[**{team1_name} wins**]"
 else:
-    st.header(':orange[**No Result**]')
+    header_text = f":orange[**No Result**]"
+
+st.header(header_text)
