@@ -18,7 +18,7 @@ with st.sidebar:
 st.subheader("Enter Match Year:")
 
 year_number = st.text_input("Match year")
-if year_number.strip() == '':
+if len(year_number) == 0:
     year_number = 2023
 else:
     year_number = int(year_number)
