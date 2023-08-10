@@ -150,14 +150,21 @@ def get_features_dataset(team0_players, team1_players, year_number):
         if type(player) != str:
             data_row = np.append(data_row, np.zeros(numFeatures * 2))
         elif year_number <= startYear or year_number >= endYear + 2:
-            data_row = np.append(data_row, name_to_features_dict[player.split('(')[0].strip()])
-            data_row = np.append(data_row, np.zeros(numFeatures))
+            PName = player.split('(')[0].strip()
+            if PName in name_to_features_dict:
+                data_row = np.append(data_row, name_to_features_dict[PName])
+                data_row = np.append(data_row, np.zeros(numFeatures))
+            else:
+                data_row = np.append(data_row, np.zeros(numFeatures * 2))
         else:
             PName = player.split('(')[0].strip()
             recent_form_row = np.zeros(numFeatures)
 
             # Get career features
-            data_row = np.append(data_row, name_to_features_dict[PName])
+            if PName in name_to_features_dict:
+                data_row = np.append(data_row, name_to_features_dict[PName])
+            else:
+                data_row = np.append(data_row, np.zeros(numFeatures))
 
             # Get one year before data
             if PName in year_to_nameFeatures_dict[year_number - 1]:
