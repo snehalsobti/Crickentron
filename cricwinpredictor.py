@@ -83,6 +83,8 @@ torch.manual_seed(42) # set the random seed
 
 team0 = [team0_player1, team1_player2, team0_player3, team0_player4, team0_player5, team0_player6, team0_player7, team0_player8, team0_player9, team0_player10, team0_player11]
 team1 = [team1_player1, team1_player2, team1_player3, team1_player4, team1_player5, team1_player6, team1_player7, team1_player8, team1_player9, team1_player10, team1_player11]
+startYear = 1971
+endYear = 2023
 
 def get_features_dataset(team0_players, team1_players, year_number):
     career_features_df = pd.read_excel('career_bat_bowl_combined.xlsx')
