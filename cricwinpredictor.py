@@ -8,7 +8,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 st.title("Crickentron 🏏")
-st.write("Predict the Winner! Enter the names of all 11 players for each team and discover the victorious team!")
+st.write("Predict the Winner! Enter the match year, team names and names of all 11 players for each team and discover the victorious team!")
 
 with st.sidebar:
     st.title('Crickentron')
