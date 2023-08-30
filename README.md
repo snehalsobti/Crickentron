@@ -1,5 +1,7 @@
 # Crickentron
-Cricket Win Predictor utilizing pandas and threading for data scraping, and PyTorch for building and training artificial neural networks.    
+A Cricket Win Predictor that predicts the winner of a cricket ODI match before the start of the game. Developed using Python with a team of three others, and utilized Python libraries and modules like Pandas, PyTorch, Threading, NumPy and Streamlit.   
+
+   
 Streamlit App - [Crickentron App](https://crickentron.streamlit.app/)    
 Presentation - [Crickentron Presentation](https://www.youtube.com/watch?v=oQvxhq6-tJY)   
 Final Report - [Crickentron Final Report](Crickentron_Final_Report.pdf)
